@@ -1,0 +1,74 @@
+<html>                                                                  
+<head>                                                                  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'/>                                           
+</head>                                                                 
+<body>                                                                  
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Collapsible Table</div>
+          <table class="table table-responsive table-hover">
+            <thead>
+              <tr>
+                <th>node_id</th>
+                <th>ID</th>
+                <th>created_at</th>
+                <th>updated_at</th>
+                <th>req_recon</th>
+                <th>type_of_change</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="maintbody">
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+<script>
+
+    $( document ).ready(function() {
+        $.getJSON("./data.js", function(result){
+            result.map((d,i) => {
+                $("#maintbody").append('<tr data-toggle="collapse" id="table'+i+'" data-target=".table'+i+'">'
+                                + '<td>'+d.node_id+'</td>'
+                                + '<td>'+d.id+'</td>'
+                                + '<td>'+d.created_at+'</td>'
+                                + '<td>'+d.updated_at+'</td>'
+                                + '<td>'+d.req_recon+'</td>'
+                                + '<td>'+d.type_of_change+'</td>'
+                                + '<td><button class="btn btn-default btn-sm">View More</button></td>'
+                            + '</tr>'
+                            + '<tr class="collapse table'+i+'">'
+                                + '<td colspan="999">'
+                                    + '<div>'
+                                        + '<table class="table table-striped">'
+                                            + '<thead>'
+                                            + '<tr>'
+                                                + '<th>private_tags</th>'
+                                                + '<th>public_tags</th>'
+                                                + '<th>user</th>'
+                                                + '<th>lat</th>'
+                                                + '<th>lon</th>'
+                                            + '</tr>'
+                                        + '</thead>'
+                                        + '<tbody>'
+                                            + '<tr>'
+                                                + '<td>'+JSON.stringify(d.private_tags)+'</td>'
+                                                + '<td>'+JSON.stringify(d.public_tags)+'</td>'
+                                                + '<td>'+d.public_node_data.user+'</td>'
+                                                + '<td>'+d.public_node_data.lat+'</td>'
+                                                + '<td>'+d.public_node_data.lon+'</td>'
+                                            + '</tr>'
+                                        + '</tbody>'
+                                        + '</table>'
+                                    + '</div>'
+                                + '</td>'
+                            + '</tr>');
+            });
+        });
+    });
+</script>
+</body>                                                                 
+</html>
